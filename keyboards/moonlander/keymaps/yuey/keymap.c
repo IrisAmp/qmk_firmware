@@ -395,30 +395,36 @@ void rgb_matrix_indicators_user(void) {
   #endif
 }
 
-static THD_WORKING_AREA(waRGBThread, 128);
-static THD_FUNCTION(RGBThread, arg) {
+void keymap_thread_task(void) {
+  if (recording) {
+    set_rgb_matrix_coords(0, 6, 6, COLOR_RED);
+    set_rgb_matrix_coords(1, 0, 6, COLOR_RED);
+    chThdSleepMilliseconds(100);
+    set_rgb_matrix_coords(0, 6, 6, COLOR_WHT);
+    set_rgb_matrix_coords(1, 0, 6, COLOR_WHT);
+    chThdSleepMilliseconds(100);
+    set_rgb_matrix_coords(0, 6, 6, COLOR_RED);
+    set_rgb_matrix_coords(1, 0, 6, COLOR_RED);
+    chThdSleepMilliseconds(100);
+    set_rgb_matrix_coords(0, 6, 6, COLOR_WHT);
+    set_rgb_matrix_coords(1, 0, 6, COLOR_WHT);
+    chThdSleepMilliseconds(550);
+  }
+}
+
+static THD_WORKING_AREA(waKeymapThread, 128);
+static THD_FUNCTION(KeymapThread, arg) {
+
     (void)arg;
-    chRegSetThreadName("RGBThread");
+
     while (true) {
-      if (recording) {
-        set_rgb_matrix_coords(0, 6, 6, COLOR_RED);
-        set_rgb_matrix_coords(1, 0, 6, COLOR_RED);
-        chThdSleepMilliseconds(100);
-        set_rgb_matrix_coords(0, 6, 6, COLOR_WHT);
-        set_rgb_matrix_coords(1, 0, 6, COLOR_WHT);
-        chThdSleepMilliseconds(100);
-        set_rgb_matrix_coords(0, 6, 6, COLOR_RED);
-        set_rgb_matrix_coords(1, 0, 6, COLOR_RED);
-        chThdSleepMilliseconds(100);
-        set_rgb_matrix_coords(0, 6, 6, COLOR_WHT);
-        set_rgb_matrix_coords(1, 0, 6, COLOR_WHT);
-        chThdSleepMilliseconds(700);
-      }
+      keymap_thread_task();
+      chThdSleepMilliseconds(1);
     }
 }
 
 void keyboard_pre_init_user(void) {
-  chThdCreateStatic(waRGBThread, sizeof(waRGBThread), NORMALPRIO-15, RGBThread, NULL);
+  chThdCreateStatic(waKeymapThread, sizeof(waKeymapThread), NORMALPRIO-16, KeymapThread, NULL);
 }
 
 #ifdef DYNAMIC_MACRO_ENABLE

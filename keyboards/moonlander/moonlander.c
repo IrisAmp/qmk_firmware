@@ -36,43 +36,43 @@ void moonlander_led_task(void) {
 
         ML_LED_1(true);
         ML_LED_4(true);
-        wait_ms(100);
+        chThdSleepMilliseconds(100);
         ML_LED_1(false);
         ML_LED_4(false);
-        wait_ms(100);
+        chThdSleepMilliseconds(100);
         ML_LED_2(true);
         ML_LED_5(true);
-        wait_ms(100);
+        chThdSleepMilliseconds(100);
         ML_LED_2(false);
         ML_LED_5(false);
-        wait_ms(100);
+        chThdSleepMilliseconds(100);
         ML_LED_3(true);
         ML_LED_6(true);
-        wait_ms(100);
+        chThdSleepMilliseconds(100);
         ML_LED_3(false);
         ML_LED_6(false);
-        wait_ms(100);
+        chThdSleepMilliseconds(100);
         ML_LED_1(true);
         ML_LED_2(true);
         ML_LED_3(true);
         ML_LED_4(true);
         ML_LED_5(true);
         ML_LED_6(true);
-        wait_ms(100);
+        chThdSleepMilliseconds(100);
         ML_LED_1(false);
         ML_LED_2(false);
         ML_LED_3(false);
         ML_LED_4(false);
         ML_LED_5(false);
         ML_LED_6(false);
-        wait_ms(100);
+        chThdSleepMilliseconds(100);
         ML_LED_1(true);
         ML_LED_2(true);
         ML_LED_3(true);
         ML_LED_4(true);
         ML_LED_5(true);
         ML_LED_6(true);
-        wait_ms(100);
+        chThdSleepMilliseconds(100);
         ML_LED_1(false);
         ML_LED_2(false);
         ML_LED_3(false);
@@ -126,7 +126,7 @@ void moonlander_led_task(void) {
                 ML_LED_6(true);
                 break;
         }
-        wait_ms(150);
+        chThdSleepMilliseconds(150);
     }
 #endif
 
@@ -134,10 +134,12 @@ void moonlander_led_task(void) {
 
 static THD_WORKING_AREA(waLEDThread, 128);
 static THD_FUNCTION(LEDThread, arg) {
+
     (void)arg;
-    chRegSetThreadName("LEDThread");
+
     while (true) {
         moonlander_led_task();
+        chThdSleepMilliseconds(1);
     }
 }
 
@@ -151,11 +153,6 @@ void keyboard_pre_init_kb(void) {
     writePinLow(B3);
 
     chThdCreateStatic(waLEDThread, sizeof(waLEDThread), NORMALPRIO-16, LEDThread, NULL);
-
-    /* the array is initialized to 0, no need to re-set it here */
-    // mcp23018_leds[0] = 0;  // blue
-    // mcp23018_leds[1] = 0;  // green
-    // mcp23018_leds[2] = 0;  // red
 
     keyboard_pre_init_user();
 }
