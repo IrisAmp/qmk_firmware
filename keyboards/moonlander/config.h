@@ -94,9 +94,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define DRIVER_LED_TOTAL (DRIVER_1_LED_TOTAL + DRIVER_2_LED_TOTAL)
 #define RGB_MATRIX_CENTER \
     { 125, 26 }
-#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 175 // limits maximum brightness of LEDs to 200 out of 255. If not defined maximum brightness is set to 255
+#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 255 // limits maximum brightness of LEDs to 200 out of 255. If not defined maximum brightness is set to 255
 #define RGB_MATRIX_FRAMEBUFFER_EFFECTS
 #define RGB_MATRIX_KEYPRESSES
+#define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_EFFECT_MAX
 #define RGB_DISABLE_WHEN_USB_SUSPENDED true
 
 // #define RGB_MATRIX_LED_PROCESS_LIMIT 5
@@ -116,7 +117,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MOUSEKEY_WHEEL_TIME_TO_MAX  MOUSEKEY_TIME_TO_MAX
 
 #define MUSIC_MAP
-
 
 #define FIRMWARE_VERSION_SIZE 17
 #define DYNAMIC_KEYMAP_EEPROM_ADDR (EECONFIG_SIZE + FIRMWARE_VERSION_SIZE)

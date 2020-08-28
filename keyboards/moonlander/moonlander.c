@@ -48,29 +48,51 @@ void moonlander_led_task(void) {
         ML_LED_6(false);
 
         ML_LED_1(true);
-        wait_ms(250);
-        ML_LED_2(true);
-        wait_ms(250);
-        ML_LED_3(true);
-        wait_ms(250);
         ML_LED_4(true);
-        wait_ms(250);
-        ML_LED_5(true);
-        wait_ms(250);
-        ML_LED_6(true);
-        wait_ms(250);
+        wait_ms(100);
         ML_LED_1(false);
-        wait_ms(250);
-        ML_LED_2(false);
-        wait_ms(250);
-        ML_LED_3(false);
-        wait_ms(250);
         ML_LED_4(false);
-        wait_ms(250);
+        wait_ms(100);
+        ML_LED_2(true);
+        ML_LED_5(true);
+        wait_ms(100);
+        ML_LED_2(false);
         ML_LED_5(false);
-        wait_ms(250);
+        wait_ms(100);
+        ML_LED_3(true);
+        ML_LED_6(true);
+        wait_ms(100);
+        ML_LED_3(false);
         ML_LED_6(false);
-        wait_ms(250);
+        wait_ms(100);
+        ML_LED_1(true);
+        ML_LED_2(true);
+        ML_LED_3(true);
+        ML_LED_4(true);
+        ML_LED_5(true);
+        ML_LED_6(true);
+        wait_ms(100);
+        ML_LED_1(false);
+        ML_LED_2(false);
+        ML_LED_3(false);
+        ML_LED_4(false);
+        ML_LED_5(false);
+        ML_LED_6(false);
+        wait_ms(100);
+        ML_LED_1(true);
+        ML_LED_2(true);
+        ML_LED_3(true);
+        ML_LED_4(true);
+        ML_LED_5(true);
+        ML_LED_6(true);
+        wait_ms(100);
+        ML_LED_1(false);
+        ML_LED_2(false);
+        ML_LED_3(false);
+        ML_LED_4(false);
+        ML_LED_5(false);
+        ML_LED_6(false);
+
         is_launching = false;
         layer_state_set_kb(layer_state);
     }
@@ -140,7 +162,6 @@ static THD_FUNCTION(LEDThread, arg) {
     }
 }
 
-
 void keyboard_pre_init_kb(void) {
     setPinOutput(B5);
     setPinOutput(B4);
@@ -149,7 +170,6 @@ void keyboard_pre_init_kb(void) {
     writePinLow(B5);
     writePinLow(B4);
     writePinLow(B3);
-
 
     chThdCreateStatic(waLEDThread, sizeof(waLEDThread), NORMALPRIO-16, LEDThread, NULL);
 
@@ -162,7 +182,7 @@ void keyboard_pre_init_kb(void) {
 }
 
 layer_state_t layer_state_set_kb(layer_state_t state) {
-    state         = layer_state_set_user(state);
+    state = layer_state_set_user(state);
     if (is_launching) return state;
 
     ML_LED_1(false);
@@ -176,11 +196,9 @@ layer_state_t layer_state_set_kb(layer_state_t state) {
     switch (layer) {
         case 1:
             ML_LED_1(1);
-            ML_LED_4(1);
             break;
         case 2:
             ML_LED_2(1);
-            ML_LED_5(1);
             break;
         case 3:
             ML_LED_3(1);
@@ -406,7 +424,6 @@ const uint8_t music_map[MATRIX_ROWS][MATRIX_COLS] = LAYOUT_moonlander(
 );
 // clang-format on
 #endif
-
 
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
