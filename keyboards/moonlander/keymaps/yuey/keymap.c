@@ -24,6 +24,9 @@ enum custom_keycodes {
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+/*------------------------------------------------------------------------------
+  LAYER 0: QWERTY
+------------------------------------------------------------------------------*/
   [0] = LAYOUT_moonlander(\
     KC_GRAVE,       KC_1,           KC_2,           KC_3,           KC_4,           KC_5,           KC_MINUS,                                       KC_EQUAL,       KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           KC_BSPACE,\
     KC_TAB,         KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,           KC_LBRACKET,                                    KC_RBRACKET,    KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           KC_BSLASH,\
@@ -32,6 +35,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_LCTRL,       KC_LGUI,        KC_LALT,        KC_LEFT,        KC_RIGHT,       KC_ESCAPE,                                                                      KC_ESCAPE,      KC_UP,          KC_DOWN,        KC_RALT,        KC_RGUI,        KC_RCTRL,\
     KC_SPACE,       KC_BSPACE,      MO(5),                                                                                                                                                                          MO(5),          KC_DELETE,      KC_ENTER\
   ),
+/*------------------------------------------------------------------------------
+  LAYER 1: DVORAK
+------------------------------------------------------------------------------*/
   [1] = LAYOUT_moonlander(\
     KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,                                        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,\
     KC_TRNS,        KC_QUOTE,       KC_COMMA,       KC_DOT,         KC_P,           KC_Y,           KC_TRNS,                                        KC_TRNS,        KC_F,           KC_G,           KC_C,           KC_R,           KC_L,           KC_BSLASH,\
@@ -40,6 +46,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,                                                                        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,\
     KC_TRNS,        KC_TRNS,        KC_TRNS,                                                                                                                                                                        KC_TRNS,        KC_TRNS,        KC_TRNS\
   ),
+/*------------------------------------------------------------------------------
+  LAYER 2: COLEMAK
+------------------------------------------------------------------------------*/
   [2] = LAYOUT_moonlander(\
     KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,                                        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,\
     KC_TRNS,        KC_Q,           KC_W,           KC_F,           KC_P,           KC_G,           KC_TRNS,                                        KC_TRNS,        KC_J,           KC_L,           KC_U,           KC_Y,           KC_SCOLON,      KC_BSLASH,\
@@ -48,6 +57,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,                                                                        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,\
     KC_TRNS,        KC_TRNS,        KC_TRNS,                                                                                                                                                                        KC_TRNS,        KC_TRNS,        KC_TRNS\
   ),
+/*------------------------------------------------------------------------------
+  LAYER 3: WORKMAN
+------------------------------------------------------------------------------*/
   [3] = LAYOUT_moonlander(\
     KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,                                        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,\
     KC_TRNS,        KC_Q,           KC_D,           KC_R,           KC_W,           KC_B,           KC_TRNS,                                        KC_TRNS,        KC_J,           KC_F,           KC_U,           KC_P,           KC_SCOLON,      KC_BSLASH,\
@@ -56,29 +68,38 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,                                                                        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,\
     KC_TRNS,        KC_TRNS,        KC_TRNS,                                                                                                                                                                        KC_TRNS,        KC_TRNS,        KC_TRNS\
   ),
+/*------------------------------------------------------------------------------
+  LAYER 4: Numpad
+------------------------------------------------------------------------------*/
   [4] = LAYOUT_moonlander(\
     KC_NUMLOCK,     KC_KP_7,        KC_KP_8,        KC_KP_9,        KC_KP_MINUS,    KC_KP_SLASH,    KC_SLCK,                                        KC_SLCK,        KC_NUMLOCK,     KC_KP_7,        KC_KP_8,        KC_KP_9,        KC_KP_MINUS,    KC_TRNS,\
     KC_TRNS,        KC_KP_4,        KC_KP_5,        KC_KP_6,        KC_KP_PLUS,     KC_KP_ASTERISK, KC_NO,                                          KC_NO,          KC_NO,          KC_KP_4,        KC_KP_5,        KC_KP_6,        KC_KP_PLUS,     KC_KP_SLASH,\
     KC_TRNS,        KC_KP_1,        KC_KP_2,        KC_KP_3,        KC_KP_ENTER,    KC_NO,          KC_TRNS,                                        KC_TRNS,        KC_NO,          KC_KP_1,        KC_KP_2,        KC_KP_3,        KC_KP_ENTER,    KC_KP_ASTERISK,\
-    KC_TRNS,        KC_KP_0,         KC_KP_0,       KC_KP_DOT,      KC_KP_ENTER,    KC_NO,                                                                          KC_NO,          KC_KP_0,         KC_KP_0,       KC_KP_DOT,      KC_KP_ENTER,    KC_TRNS,\
+    KC_TRNS,        KC_KP_0,        KC_KP_0,        KC_KP_DOT,      KC_KP_ENTER,    KC_NO,                                                                          KC_NO,          KC_KP_0,        KC_KP_0,        KC_KP_DOT,      KC_KP_ENTER,    KC_TRNS,\
     KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,                                                                        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,\
     KC_TRNS,        KC_TRNS,        KC_TRNS,                                                                                                                                                                        KC_TRNS,        KC_TRNS,        KC_TRNS\
   ),
+/*------------------------------------------------------------------------------
+  LAYER 5: Config
+------------------------------------------------------------------------------*/
   [5] = LAYOUT_moonlander(\
     KC_NO,          TO(1),          TO(2),          TO(3),          TO(4),          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          TO(0),          KC_NO,\
     KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,\
-    KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,\
+    KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          DM_REC1,                                        DM_REC2,        KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,\
     KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                                                          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,\
-    KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          RESET,                                                                          RESET,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,\
-    KC_NO,          KC_NO,          KC_TRNS,                                                                                                                                                                        KC_TRNS,        KC_NO,          KC_NO\
+    KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                          DM_RSTP,                                        DM_RSTP,        KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,\
+                                                                                    KC_NO,          KC_NO,          KC_TRNS,        KC_TRNS,        KC_NO,          KC_NO\
   ),
+/*------------------------------------------------------------------------------
+  LAYER 6: FN
+------------------------------------------------------------------------------*/
   [6] = LAYOUT_moonlander(\
     KC_TRNS,        KC_F1,          KC_F2,          KC_F3,          KC_F4,          KC_F5,          KC_F11,                                         KC_F12,         KC_F6,          KC_F7,          KC_F8,          KC_F9,          KC_F10,         KC_TRNS,\
     KC_TRNS,        KC_F13,         KC_F14,         KC_F15,         KC_F16,         KC_F17,         KC_F23,                                         KC_F24,         KC_F18,         KC_F19,         KC_F20,         KC_F21,         KC_F22,         KC_TRNS,\
     KC_TRNS,        KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_TRNS,                                        KC_TRNS,        KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_TRNS,\
-    KC_TRNS,        KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                                                          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_TRNS,\
-    KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_INSERT,                                                                      KC_DELETE,      KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,\
-    KC_HOME,        KC_END,         KC_NO,                                                                                                                                                                          KC_NO,          KC_PGUP,        KC_PGDOWN\
+    KC_TRNS,        KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                                                          KC_NO,          KC_MUTE,        KC_NO,          KC_MPLY,        KC_NO,          KC_TRNS,\
+    KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_MPRV,        KC_MNXT,                        KC_INSERT,                                      KC_DELETE,                      KC_VOLU,        KC_VOLD,        KC_TRNS,        KC_TRNS,        KC_TRNS,\
+                                                                                    KC_HOME,        KC_END,         DM_PLY1,        DM_PLY2,        KC_PGUP,        KC_PGDOWN\
   ),
 };
 
@@ -114,6 +135,24 @@ uint8_t key_coords[2][7][7] = {
     { 70, 69, 68, XX, XX, XX, XX } }
 };
 
+bool reserved_keys[2][7][7] = {
+  { { false, false, false, false, false, false, false },
+    { false, false, false, false, false, false, false },
+    { false, false, false, false, false, false, false },
+    { false, false, false, false, false, false, false },
+    { false, false, false, false, false, false, false },
+    { false, false, false, false, false, false, false },
+    { false, false, false, false, false, false, false } },
+  { { false, false, false, false, false, false, false },
+    { false, false, false, false, false, false, false },
+    { false, false, false, false, false, false, false },
+    { false, false, false, false, false, false, false },
+    { false, false, false, false, false, false, false },
+    { false, false, false, false, false, false, false },
+    { false, false, false, false, false, false, false } }
+};
+
+
 #define _________ 0, 0, 0
 #define COLOR_BLK 0x00, 0x00, 0x00
 #define COLOR_WHT 0xFF, 0xFF, 0xFF
@@ -140,14 +179,14 @@ uint8_t color_maps[][2][7][7][3] = {
     { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { _________ } },
     { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { _________ }, { _________ } },
     { { _________ }, { _________ }, { _________ }, { _________ }, { _________ }, { COLOR_RED }, { _________ } },
-    { { _________ }, { _________ }, { _________ }, { _________ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } } },
+    { { _________ }, { _________ }, { _________ }, { _________ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_005 } } },
   { { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
     { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
     { { COLOR_BLU }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
     { { _________ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
     { { _________ }, { _________ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
     { { _________ }, { COLOR_RED }, { _________ }, { _________ }, { _________ }, { _________ }, { _________ } },
-    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { _________ }, { _________ }, { _________ }, { _________ } } } },
+    { { COLOR_005 }, { COLOR_WHT }, { COLOR_WHT }, { _________ }, { _________ }, { _________ }, { _________ } } } },
 
 /*------------------------------------------------------------------------------
   LAYER 1: DVORAK
@@ -158,14 +197,14 @@ uint8_t color_maps[][2][7][7][3] = {
     { { COLOR_WHT }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { _________ } },
     { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { _________ }, { _________ } },
     { { _________ }, { _________ }, { _________ }, { _________ }, { _________ }, { COLOR_RED }, { _________ } },
-    { { _________ }, { _________ }, { _________ }, { _________ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } } },
+    { { _________ }, { _________ }, { _________ }, { _________ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_005 } } },
   { { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
     { { COLOR_WHT }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 } },
     { { COLOR_BLU }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 } },
     { { _________ }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_WHT } },
     { { _________ }, { _________ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
     { { _________ }, { COLOR_RED }, { _________ }, { _________ }, { _________ }, { _________ }, { _________ } },
-    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { _________ }, { _________ }, { _________ }, { _________ } } } },
+    { { COLOR_005 }, { COLOR_WHT }, { COLOR_WHT }, { _________ }, { _________ }, { _________ }, { _________ } } } },
 
 /*------------------------------------------------------------------------------
   LAYER 2: COLEMAK
@@ -176,14 +215,14 @@ uint8_t color_maps[][2][7][7][3] = {
     { { COLOR_WHT }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { _________ } },
     { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { _________ }, { _________ } },
     { { _________ }, { _________ }, { _________ }, { _________ }, { _________ }, { COLOR_RED }, { _________ } },
-    { { _________ }, { _________ }, { _________ }, { _________ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } } },
+    { { _________ }, { _________ }, { _________ }, { _________ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_005 } } },
   { { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
     { { COLOR_WHT }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 } },
     { { COLOR_BLU }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 } },
     { { _________ }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_WHT } },
     { { _________ }, { _________ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
     { { _________ }, { COLOR_RED }, { _________ }, { _________ }, { _________ }, { _________ }, { _________ } },
-    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { _________ }, { _________ }, { _________ }, { _________ } } } },
+    { { COLOR_005 }, { COLOR_WHT }, { COLOR_WHT }, { _________ }, { _________ }, { _________ }, { _________ } } } },
 
 /*------------------------------------------------------------------------------
   LAYER 3: WORKMAN
@@ -194,14 +233,14 @@ uint8_t color_maps[][2][7][7][3] = {
     { { COLOR_WHT }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { _________ } },
     { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { _________ }, { _________ } },
     { { _________ }, { _________ }, { _________ }, { _________ }, { _________ }, { COLOR_RED }, { _________ } },
-    { { _________ }, { _________ }, { _________ }, { _________ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } } },
+    { { _________ }, { _________ }, { _________ }, { _________ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_005 } } },
   { { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
     { { COLOR_WHT }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 } },
     { { COLOR_BLU }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 } },
     { { _________ }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_WHT } },
     { { _________ }, { _________ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
     { { _________ }, { COLOR_RED }, { _________ }, { _________ }, { _________ }, { _________ }, { _________ } },
-    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { _________ }, { _________ }, { _________ }, { _________ } } } },
+    { { COLOR_005 }, { COLOR_WHT }, { COLOR_WHT }, { _________ }, { _________ }, { _________ }, { _________ } } } },
 
 /*------------------------------------------------------------------------------
   LAYER 4: Numpad
@@ -212,32 +251,32 @@ uint8_t color_maps[][2][7][7][3] = {
     { { COLOR_WHT }, { COLOR_004 }, { COLOR_004 }, { COLOR_006 }, { COLOR_006 }, { COLOR_BLK }, { _________ } },
     { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { _________ }, { _________ } },
     { { _________ }, { _________ }, { _________ }, { _________ }, { _________ }, { COLOR_RED }, { _________ } },
-    { { _________ }, { _________ }, { _________ }, { _________ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_006 } } },
+    { { _________ }, { _________ }, { _________ }, { _________ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_005 } } },
   { { { COLOR_006 }, { COLOR_006 }, { COLOR_004 }, { COLOR_004 }, { COLOR_004 }, { COLOR_006 }, { COLOR_WHT } },
     { { COLOR_BLK }, { COLOR_BLK }, { COLOR_004 }, { COLOR_004 }, { COLOR_004 }, { COLOR_006 }, { COLOR_006 } },
     { { COLOR_BLU }, { COLOR_BLK }, { COLOR_004 }, { COLOR_004 }, { COLOR_004 }, { COLOR_006 }, { COLOR_006 } },
     { { _________ }, { COLOR_BLK }, { COLOR_004 }, { COLOR_004 }, { COLOR_006 }, { COLOR_006 }, { COLOR_WHT } },
     { { _________ }, { _________ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
     { { _________ }, { COLOR_RED }, { _________ }, { _________ }, { _________ }, { _________ }, { _________ } },
-    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { _________ }, { _________ }, { _________ }, { _________ } } } },
+    { { COLOR_005 }, { COLOR_WHT }, { COLOR_WHT }, { _________ }, { _________ }, { _________ }, { _________ } } } },
 
 /*------------------------------------------------------------------------------
   LAYER 5: Config
 ------------------------------------------------------------------------------*/
 { { { { COLOR_BLK }, { COLOR_001 }, { COLOR_002 }, { COLOR_003 }, { COLOR_004 }, { COLOR_BLK }, { COLOR_BLK } },
     { { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK } },
-    { { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK } },
+    { { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_RED } },
     { { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { _________ } },
     { { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { _________ }, { _________ } },
     { { _________ }, { _________ }, { _________ }, { _________ }, { _________ }, { COLOR_RED }, { _________ } },
-    { { _________ }, { _________ }, { _________ }, { _________ }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_WHT } } },
+    { { _________ }, { _________ }, { _________ }, { _________ }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_005 } } },
   { { { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_WHT }, { COLOR_BLK } },
     { { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK } },
-    { { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK } },
+    { { COLOR_RED }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK } },
     { { _________ }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK } },
     { { _________ }, { _________ }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK } },
     { { _________ }, { COLOR_RED }, { _________ }, { _________ }, { _________ }, { _________ }, { _________ } },
-    { { COLOR_WHT }, { COLOR_BLK }, { COLOR_BLK }, { _________ }, { _________ }, { _________ }, { _________ } } } },
+    { { COLOR_005 }, { COLOR_BLK }, { COLOR_BLK }, { _________ }, { _________ }, { _________ }, { _________ } } } },
 
 /*------------------------------------------------------------------------------
   LAYER 6: FN
@@ -246,16 +285,16 @@ uint8_t color_maps[][2][7][7][3] = {
     { { COLOR_WHT }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 } },
     { { COLOR_WHT }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLU } },
     { { COLOR_WHT }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { _________ } },
-    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { _________ }, { _________ } },
-    { { _________ }, { _________ }, { _________ }, { _________ }, { _________ }, { COLOR_RED }, { _________ } },
-    { { _________ }, { _________ }, { _________ }, { _________ }, { COLOR_006 }, { COLOR_006 }, { COLOR_BLK } } },
+    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_006 }, { COLOR_006 }, { _________ }, { _________ } },
+    { { _________ }, { _________ }, { _________ }, { _________ }, { _________ }, { COLOR_006 }, { _________ } },
+    { { _________ }, { _________ }, { _________ }, { _________ }, { COLOR_006 }, { COLOR_006 }, { COLOR_RED } } },
   { { { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_WHT } },
     { { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_WHT } },
     { { COLOR_BLU }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_WHT } },
-    { { _________ }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_WHT } },
-    { { _________ }, { _________ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
-    { { _________ }, { COLOR_RED }, { _________ }, { _________ }, { _________ }, { _________ }, { _________ } },
-    { { COLOR_BLK }, { COLOR_006 }, { COLOR_006 }, { _________ }, { _________ }, { _________ }, { _________ } } } },
+    { { _________ }, { COLOR_BLK }, { COLOR_006 }, { COLOR_BLK }, { COLOR_006 }, { COLOR_BLK }, { COLOR_WHT } },
+    { { _________ }, { _________ }, { COLOR_006 }, { COLOR_006 }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
+    { { _________ }, { COLOR_006 }, { _________ }, { _________ }, { _________ }, { _________ }, { _________ } },
+    { { COLOR_RED }, { COLOR_006 }, { COLOR_006 }, { _________ }, { _________ }, { _________ }, { _________ } } } },
 };
 
 void set_rgb_matrix_coords(uint8_t side, uint8_t x, uint8_t y, uint8_t red, uint8_t green, uint8_t blue) {
@@ -285,19 +324,31 @@ void set_rgb_by_map(uint8_t mapIdx) {
   for (uint8_t z = 0; z < 2; z++) {
     for (uint8_t x = 0; x < 7; x++) {
       for (uint8_t y = 0; y < 7; y++) {
-        set_rgb_matrix_coords(z, x, y, color_maps[mapIdx][z][y][x][0], color_maps[mapIdx][z][y][x][1], color_maps[mapIdx][z][y][x][2]);
+        if (!reserved_keys[z][y][x]) {
+          set_rgb_matrix_coords(z, x, y, color_maps[mapIdx][z][y][x][0], color_maps[mapIdx][z][y][x][1], color_maps[mapIdx][z][y][x][2]);
+        }
       }
     }
   }
 }
 
+void reserve_rgb_coord(uint8_t side, uint8_t x, uint8_t y, bool value) {
+  reserved_keys[side][y][x] = value;
+}
+
+static bool recording = false;
+static bool macro1Recorded = false;
+static bool macro2Recorded = false;
+
 void rgb_matrix_indicators_user(void) {
   #ifdef RGB_MATRIX_ENABLE
+
   if (rgb_matrix_get_mode() != RGB_MATRIX_EFFECT_MAX) {
     rgb_matrix_mode(RGB_MATRIX_EFFECT_MAX);
   }
   uint8_t layer = get_highest_layer(layer_state);
   set_rgb_by_map(layer);
+
   led_t lock_state = host_keyboard_led_state();
   switch (layer) {
     case 0:
@@ -320,8 +371,64 @@ void rgb_matrix_indicators_user(void) {
       }
       break;
 
+    case 5:
+      if (macro1Recorded) {
+        set_rgb_matrix_coords(0, 6, 2, COLOR_GRN);
+      }
+      if (macro2Recorded) {
+        set_rgb_matrix_coords(1, 0, 2, COLOR_GRN);
+      }
+      break;
+
+    case 6:
+      if (macro1Recorded) {
+        set_rgb_matrix_coords(0, 6, 6, COLOR_GRN);
+      }
+      if (macro2Recorded) {
+        set_rgb_matrix_coords(1, 0, 6, COLOR_GRN);
+      }
+      break;
+
     default:
       break;
   }
+
+  if (recording) {
+    set_rgb_matrix_coords(0, 6, 2, COLOR_RED);
+    set_rgb_matrix_coords(1, 0, 2, COLOR_RED);
+  }
+
   #endif
 }
+
+// static THD_WORKING_AREA(waRGBThread, 128);
+// static THD_FUNCTION(RGBThread, arg) {
+//     (void)arg;
+//     chRegSetThreadName("RGBThread");
+//     while (true) {
+//       reserve_rgb_coord(0, 3, 2, true);
+//       set_rgb_matrix_coords(0, 3, 2, COLOR_RED);
+//       chThdSleepMilliseconds(1000);
+//       set_rgb_matrix_coords(0, 3, 2, COLOR_WHT);
+//       chThdSleepMilliseconds(1000);
+//     }
+// }
+
+// void keyboard_pre_init_user(void) {
+//   chThdCreateStatic(waRGBThread, sizeof(waRGBThread), NORMALPRIO-15, RGBThread, NULL);
+// }
+
+#ifdef DYNAMIC_MACRO_ENABLE
+void dynamic_macro_record_start_user(void) {
+  recording = true;
+}
+
+void dynamic_macro_record_end_user(int8_t direction) {
+  recording = false;
+  if (direction == 1) {
+    macro1Recorded = true;
+  } else if (direction == -1) {
+    macro2Recorded = true;
+  }
+}
+#endif
