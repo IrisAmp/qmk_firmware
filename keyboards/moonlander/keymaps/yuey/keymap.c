@@ -83,12 +83,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   LAYER 5: Config
 ------------------------------------------------------------------------------*/
   [5] = LAYOUT_moonlander(\
-    XXXXXXX, TO(1),   TO(2),   TO(3),   TO(4),   XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TO(0),   KC_NO,\
+    TO(0),   TO(1),   TO(2),   TO(3),   TO(4),   XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_NO,\
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_NO,\
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, DM_REC1,                   DM_REC2, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_NO,\
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_NO,\
+    XXXXXXX, KC_PWR,  KC_SLEP, KC_WAKE, XXXXXXX, XXXXXXX,                                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_NO,\
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          DM_RSTP,                   DM_RSTP,          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_NO,\
-                                                 XXXXXXX, XXXXXXX, _______, _______, XXXXXXX, KC_NO\
+                                                 XXXXXXX, XXXXXXX, _______, _______, XXXXXXX, XXXXXXX\
   ),
 /*------------------------------------------------------------------------------
   LAYER 6: FN
@@ -258,14 +258,14 @@ uint8_t color_maps[][2][7][7][3] = {
 /*------------------------------------------------------------------------------
   LAYER 5: Config
 ------------------------------------------------------------------------------*/
-{ { { { COLOR_BLK }, { COLOR_001 }, { COLOR_002 }, { COLOR_003 }, { COLOR_004 }, { COLOR_BLK }, { COLOR_BLK } },
+{ { { { COLOR_WHT }, { COLOR_001 }, { COLOR_002 }, { COLOR_003 }, { COLOR_004 }, { COLOR_BLK }, { COLOR_BLK } },
     { { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK } },
     { { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_RED } },
-    { { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { __NOCLR__ } },
+    { { COLOR_BLK }, { COLOR_RED }, { COLOR_YLW }, { COLOR_GRN }, { COLOR_BLK }, { COLOR_BLK }, { __NOCLR__ } },
     { { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { __NOCLR__ }, { __NOCLR__ } },
     { { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { COLOR_RED }, { __NOCLR__ } },
     { { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_005 } } },
-  { { { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_WHT }, { COLOR_BLK } },
+  { { { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK } },
     { { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK } },
     { { COLOR_RED }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK } },
     { { __NOCLR__ }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK } },
@@ -334,16 +334,18 @@ static volatile bool recording = false;
 static bool macro1Recorded = false;
 static bool macro2Recorded = false;
 
-void rgb_matrix_indicators_user(void) {
+void process_rgb_matrix_state(void) {
   #ifdef RGB_MATRIX_ENABLE
 
   if (rgb_matrix_get_mode() != RGB_MATRIX_EFFECT_MAX) {
     rgb_matrix_mode(RGB_MATRIX_EFFECT_MAX);
   }
+
   uint8_t layer = get_highest_layer(layer_state);
   set_rgb_by_map(layer);
 
   led_t lock_state = host_keyboard_led_state();
+
   switch (layer) {
     case 0:
     case 1:
@@ -395,6 +397,14 @@ void rgb_matrix_indicators_user(void) {
   #endif
 }
 
+void keyboard_post_init_user(void) {
+  process_rgb_matrix_state();
+}
+
+void rgb_matrix_indicators_user(void) {
+  process_rgb_matrix_state();
+}
+
 void keymap_thread_task(void) {
   if (recording) {
     set_rgb_matrix_coords(0, 6, 6, COLOR_RED);
@@ -408,7 +418,7 @@ void keymap_thread_task(void) {
     chThdSleepMilliseconds(100);
     set_rgb_matrix_coords(0, 6, 6, COLOR_WHT);
     set_rgb_matrix_coords(1, 0, 6, COLOR_WHT);
-    chThdSleepMilliseconds(550);
+    chThdSleepMilliseconds(500);
   }
 }
 
