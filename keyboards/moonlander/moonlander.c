@@ -16,120 +16,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "moonlander.h"
-#ifdef WEBUSB_ENABLE
-#include "webusb.h"
-#endif
 
 keyboard_config_t keyboard_config;
 
 bool mcp23018_leds[3] = {0, 0, 0};
 bool is_launching = false;
 
+void led_launch_program(void);
 void moonlander_led_task(void) {
     if (is_launching) {
-        ML_LED_1(false);
-        ML_LED_2(false);
-        ML_LED_3(false);
-        ML_LED_4(false);
-        ML_LED_5(false);
-        ML_LED_6(false);
-
-        ML_LED_1(true);
-        ML_LED_4(true);
-        chThdSleepMilliseconds(100);
-        ML_LED_1(false);
-        ML_LED_4(false);
-        chThdSleepMilliseconds(100);
-        ML_LED_2(true);
-        ML_LED_5(true);
-        chThdSleepMilliseconds(100);
-        ML_LED_2(false);
-        ML_LED_5(false);
-        chThdSleepMilliseconds(100);
-        ML_LED_3(true);
-        ML_LED_6(true);
-        chThdSleepMilliseconds(100);
-        ML_LED_3(false);
-        ML_LED_6(false);
-        chThdSleepMilliseconds(100);
-        ML_LED_1(true);
-        ML_LED_2(true);
-        ML_LED_3(true);
-        ML_LED_4(true);
-        ML_LED_5(true);
-        ML_LED_6(true);
-        chThdSleepMilliseconds(100);
-        ML_LED_1(false);
-        ML_LED_2(false);
-        ML_LED_3(false);
-        ML_LED_4(false);
-        ML_LED_5(false);
-        ML_LED_6(false);
-        chThdSleepMilliseconds(100);
-        ML_LED_1(true);
-        ML_LED_2(true);
-        ML_LED_3(true);
-        ML_LED_4(true);
-        ML_LED_5(true);
-        ML_LED_6(true);
-        chThdSleepMilliseconds(100);
-        ML_LED_1(false);
-        ML_LED_2(false);
-        ML_LED_3(false);
-        ML_LED_4(false);
-        ML_LED_5(false);
-        ML_LED_6(false);
-
+        led_launch_program();
         is_launching = false;
         layer_state_set_kb(layer_state);
     }
-#ifdef WEBUSB_ENABLE
-    else if (webusb_state.pairing == true) {
-        static uint8_t led_mask;
-
-        ML_LED_1(false);
-        ML_LED_2(false);
-        ML_LED_3(false);
-        ML_LED_4(false);
-        ML_LED_5(false);
-        ML_LED_6(false);
-
-        if (!led_mask) {
-            led_mask = 1;
-        } else {
-            led_mask++;
-            if (led_mask > 12) led_mask = 1;
-        }
-        switch (led_mask) {
-            case 1:
-            case 12:
-                ML_LED_1(true);
-                break;
-            case 2:
-            case 11:
-                ML_LED_2(true);
-                break;
-            case 3:
-            case 10:
-                ML_LED_3(true);
-                break;
-            case 4:
-            case 9:
-                ML_LED_4(true);
-                break;
-            case 5:
-            case 8:
-                ML_LED_5(true);
-                break;
-            case 6:
-            case 7:
-                ML_LED_6(true);
-                break;
-        }
-        chThdSleepMilliseconds(150);
-    }
-#endif
-
 }
 
 static THD_WORKING_AREA(waLEDThread, 128);
@@ -458,4 +357,82 @@ void eeconfig_init_kb(void) {  // EEPROM is getting reset!
     keyboard_config.rgb_matrix_enable = true;
     eeconfig_update_kb(keyboard_config.raw);
     eeconfig_init_user();
+}
+
+void setAllLeds(bool state) {
+    ML_LED_1(state);
+    ML_LED_2(state);
+    ML_LED_3(state);
+    ML_LED_4(state);
+    ML_LED_5(state);
+    ML_LED_6(state);
+}
+
+void led_launch_program() {
+    setAllLeds(false);
+
+    ML_LED_1(true);
+    chThdSleepMilliseconds(50);
+    ML_LED_1(false);
+
+    ML_LED_2(true);
+    chThdSleepMilliseconds(50);
+    ML_LED_2(false);
+
+    ML_LED_3(true);
+    chThdSleepMilliseconds(50);
+    ML_LED_3(false);
+
+    ML_LED_4(true);
+    chThdSleepMilliseconds(50);
+    ML_LED_4(false);
+
+    ML_LED_5(true);
+    chThdSleepMilliseconds(50);
+    ML_LED_5(false);
+
+    ML_LED_6(true);
+    chThdSleepMilliseconds(50);
+    ML_LED_6(false);
+
+    chThdSleepMilliseconds(150);
+
+    ML_LED_1(true);
+    ML_LED_3(true);
+    ML_LED_5(true);
+    chThdSleepMilliseconds(50);
+    ML_LED_1(false);
+    ML_LED_3(false);
+    ML_LED_5(false);
+    ML_LED_2(true);
+    ML_LED_4(true);
+    ML_LED_6(true);
+    chThdSleepMilliseconds(50);
+    ML_LED_2(false);
+    ML_LED_4(false);
+    ML_LED_6(false);
+    ML_LED_1(true);
+    ML_LED_3(true);
+    ML_LED_5(true);
+    chThdSleepMilliseconds(50);
+    ML_LED_1(false);
+    ML_LED_3(false);
+    ML_LED_5(false);
+    ML_LED_2(true);
+    ML_LED_4(true);
+    ML_LED_6(true);
+    chThdSleepMilliseconds(50);
+    ML_LED_2(false);
+    ML_LED_4(false);
+    ML_LED_6(false);
+
+    chThdSleepMilliseconds(150);
+
+    setAllLeds(true);
+    chThdSleepMilliseconds(50);
+    setAllLeds(false);
+    chThdSleepMilliseconds(50);
+    setAllLeds(true);
+    chThdSleepMilliseconds(50);
+    setAllLeds(false);
 }

@@ -31,7 +31,9 @@ void dynamic_macro_led_blink(void) {
 
 __attribute__((weak)) void dynamic_macro_record_start_user(void) { dynamic_macro_led_blink(); }
 
-__attribute__((weak)) void dynamic_macro_play_user(int8_t direction) { dynamic_macro_led_blink(); }
+__attribute__((weak)) void dynamic_macro_play_start_user(int8_t direction) { dynamic_macro_led_blink(); }
+
+__attribute__((weak)) void dynamic_macro_play_end_user(int8_t direction) { dynamic_macro_led_blink(); }
 
 __attribute__((weak)) void dynamic_macro_record_key_user(int8_t direction, keyrecord_t *record) { dynamic_macro_led_blink(); }
 
@@ -75,16 +77,18 @@ void dynamic_macro_play(keyrecord_t *macro_buffer, keyrecord_t *macro_end, int8_
     clear_keyboard();
     layer_clear();
 
+    dynamic_macro_play_start_user(direction);
+
     while (macro_buffer != macro_end) {
         process_record(macro_buffer);
         macro_buffer += direction;
     }
 
+    dynamic_macro_play_end_user(direction);
+
     clear_keyboard();
 
     layer_state = saved_layer_state;
-
-    dynamic_macro_play_user(direction);
 }
 
 /**
@@ -109,9 +113,9 @@ void dynamic_macro_record_key(keyrecord_t *macro_buffer, keyrecord_t **macro_poi
     if (*macro_pointer - direction != macro2_end) {
         **macro_pointer = *record;
         *macro_pointer += direction;
-    } else {
-        dynamic_macro_record_key_user(direction, record);
     }
+
+    dynamic_macro_record_key_user(direction, record);
 
     dprintf("dynamic macro: slot %d length: %d/%d\n", DYNAMIC_MACRO_CURRENT_SLOT(), DYNAMIC_MACRO_CURRENT_LENGTH(macro_buffer, *macro_pointer), DYNAMIC_MACRO_CURRENT_CAPACITY(macro_buffer, macro2_end));
 }

@@ -1,23 +1,27 @@
 #include QMK_KEYBOARD_H
 #include "version.h"
+#include "moonlander.h"
 
-#define KC_MAC_UNDO LGUI(KC_Z)
-#define KC_MAC_CUT LGUI(KC_X)
-#define KC_MAC_COPY LGUI(KC_C)
-#define KC_MAC_PASTE LGUI(KC_V)
-#define KC_PC_UNDO LCTL(KC_Z)
-#define KC_PC_CUT LCTL(KC_X)
-#define KC_PC_COPY LCTL(KC_C)
-#define KC_PC_PASTE LCTL(KC_V)
-#define ES_LESS_MAC KC_GRAVE
-#define ES_GRTR_MAC LSFT(KC_GRAVE)
-#define ES_BSLS_MAC ALGR(KC_6)
-#define NO_PIPE_ALT KC_GRAVE
-#define NO_BSLS_ALT KC_EQUAL
-#define LSA_T(kc) MT(MOD_LSFT | MOD_LALT, kc)
-#define BP_NDSH_MAC ALGR(KC_8)
+extern bool mcp23018_leds[3];
+extern bool is_launching;
 
 #define TOG_LAYERCOLOR TOGGLE_LAYER_COLOR
+
+#define ___CLR___ 0, 0, 0
+#define COLOR_BLK 0x00, 0x00, 0x00
+#define COLOR_WHT 0xFF, 0xFF, 0xFF
+#define COLOR_RED 0xFF, 0x20, 0x20
+#define COLOR_GRN 0x20, 0xFF, 0x20
+#define COLOR_BLU 0x20, 0x20, 0xFF
+#define COLOR_CYN 0x10, 0xFF, 0xFF
+#define COLOR_MAG 0xFF, 0x10, 0xFF
+#define COLOR_YLW 0xFF, 0xFF, 0x10
+#define COLOR_001 COLOR_BLU
+#define COLOR_002 COLOR_RED
+#define COLOR_003 COLOR_GRN
+#define COLOR_004 COLOR_CYN
+#define COLOR_005 COLOR_YLW
+#define COLOR_006 COLOR_MAG
 
 enum custom_keycodes {
   RGB_SLD = ML_SAFE_RANGE,
@@ -83,11 +87,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   LAYER 5: Config
 ------------------------------------------------------------------------------*/
   [5] = LAYOUT_moonlander(\
-    TO(0),   TO(1),   TO(2),   TO(3),   TO(4),   XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_NO,\
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_NO,\
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, DM_REC1,                   DM_REC2, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_NO,\
-    XXXXXXX, KC_PWR,  KC_SLEP, KC_WAKE, XXXXXXX, XXXXXXX,                                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_NO,\
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          DM_RSTP,                   DM_RSTP,          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_NO,\
+    TO(0),   TO(1),   TO(2),   TO(3),   TO(4),   XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PWR,  XXXXXXX,\
+    XXXXXXX, XXXXXXX, KC_SLEP, XXXXXXX, XXXXXXX, XXXXXXX, DM_REC1,                   DM_REC2, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          DM_RSTP,                   DM_RSTP,          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
                                                  XXXXXXX, XXXXXXX, _______, _______, XXXXXXX, XXXXXXX\
   ),
 /*------------------------------------------------------------------------------
@@ -101,6 +105,128 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, KC_MPRV, KC_MNXT,          KC_INS,                    KC_DEL,           KC_VOLU, KC_VOLD, _______, _______, _______,\
                                                  KC_HOME, KC_END,  DM_PLY1, DM_PLY2, KC_PGUP, KC_PGDN\
   ),
+};
+
+uint8_t color_maps[][2][7][7][3] = {
+/*------------------------------------------------------------------------------
+  LAYER 0: QWERTY
+------------------------------------------------------------------------------*/
+{ { { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
+    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
+    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_BLU } },
+    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { ___CLR___ } },
+    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { ___CLR___ }, { ___CLR___ } },
+    { { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { COLOR_RED }, { ___CLR___ } },
+    { { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_005 } } },
+  { { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
+    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
+    { { COLOR_BLU }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
+    { { ___CLR___ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
+    { { ___CLR___ }, { ___CLR___ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
+    { { ___CLR___ }, { COLOR_RED }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ } },
+    { { COLOR_005 }, { COLOR_WHT }, { COLOR_WHT }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ } } } },
+/*------------------------------------------------------------------------------
+  LAYER 1: DVORAK
+------------------------------------------------------------------------------*/
+{ { { { COLOR_WHT }, { COLOR_001 }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
+    { { COLOR_WHT }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_WHT } },
+    { { COLOR_WHT }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_BLU } },
+    { { COLOR_WHT }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { ___CLR___ } },
+    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { ___CLR___ }, { ___CLR___ } },
+    { { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { COLOR_RED }, { ___CLR___ } },
+    { { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_005 } } },
+  { { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
+    { { COLOR_WHT }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 } },
+    { { COLOR_BLU }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 } },
+    { { ___CLR___ }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_WHT } },
+    { { ___CLR___ }, { ___CLR___ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
+    { { ___CLR___ }, { COLOR_RED }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ } },
+    { { COLOR_005 }, { COLOR_WHT }, { COLOR_WHT }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ } } } },
+/*------------------------------------------------------------------------------
+  LAYER 2: COLEMAK
+------------------------------------------------------------------------------*/
+{ { { { COLOR_WHT }, { COLOR_WHT }, { COLOR_002 }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
+    { { COLOR_WHT }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_WHT } },
+    { { COLOR_WHT }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_BLU } },
+    { { COLOR_WHT }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { ___CLR___ } },
+    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { ___CLR___ }, { ___CLR___ } },
+    { { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { COLOR_RED }, { ___CLR___ } },
+    { { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_005 } } },
+  { { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
+    { { COLOR_WHT }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 } },
+    { { COLOR_BLU }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 } },
+    { { ___CLR___ }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_WHT } },
+    { { ___CLR___ }, { ___CLR___ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
+    { { ___CLR___ }, { COLOR_RED }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ } },
+    { { COLOR_005 }, { COLOR_WHT }, { COLOR_WHT }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ } } } },
+/*------------------------------------------------------------------------------
+  LAYER 3: WORKMAN
+------------------------------------------------------------------------------*/
+{ { { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_003 }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
+    { { COLOR_WHT }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_WHT } },
+    { { COLOR_WHT }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_BLU } },
+    { { COLOR_WHT }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { ___CLR___ } },
+    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { ___CLR___ }, { ___CLR___ } },
+    { { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { COLOR_RED }, { ___CLR___ } },
+    { { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_005 } } },
+  { { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
+    { { COLOR_WHT }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 } },
+    { { COLOR_BLU }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 } },
+    { { ___CLR___ }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_WHT } },
+    { { ___CLR___ }, { ___CLR___ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
+    { { ___CLR___ }, { COLOR_RED }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ } },
+    { { COLOR_005 }, { COLOR_WHT }, { COLOR_WHT }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ } } } },
+/*------------------------------------------------------------------------------
+  LAYER 4: Numpad
+------------------------------------------------------------------------------*/
+{ { { { COLOR_006 }, { COLOR_004 }, { COLOR_004 }, { COLOR_004 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 } },
+    { { COLOR_WHT }, { COLOR_004 }, { COLOR_004 }, { COLOR_004 }, { COLOR_006 }, { COLOR_006 }, { COLOR_BLK } },
+    { { COLOR_WHT }, { COLOR_004 }, { COLOR_004 }, { COLOR_004 }, { COLOR_006 }, { COLOR_BLK }, { COLOR_BLU } },
+    { { COLOR_WHT }, { COLOR_004 }, { COLOR_004 }, { COLOR_006 }, { COLOR_006 }, { COLOR_BLK }, { ___CLR___ } },
+    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { ___CLR___ }, { ___CLR___ } },
+    { { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { COLOR_RED }, { ___CLR___ } },
+    { { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_005 } } },
+  { { { COLOR_006 }, { COLOR_006 }, { COLOR_004 }, { COLOR_004 }, { COLOR_004 }, { COLOR_006 }, { COLOR_WHT } },
+    { { COLOR_BLK }, { COLOR_BLK }, { COLOR_004 }, { COLOR_004 }, { COLOR_004 }, { COLOR_006 }, { COLOR_006 } },
+    { { COLOR_BLU }, { COLOR_BLK }, { COLOR_004 }, { COLOR_004 }, { COLOR_004 }, { COLOR_006 }, { COLOR_006 } },
+    { { ___CLR___ }, { COLOR_BLK }, { COLOR_004 }, { COLOR_004 }, { COLOR_006 }, { COLOR_006 }, { COLOR_WHT } },
+    { { ___CLR___ }, { ___CLR___ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
+    { { ___CLR___ }, { COLOR_RED }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ } },
+    { { COLOR_005 }, { COLOR_WHT }, { COLOR_WHT }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ } } } },
+/*------------------------------------------------------------------------------
+  LAYER 5: Config
+------------------------------------------------------------------------------*/
+{ { { { COLOR_WHT }, { COLOR_001 }, { COLOR_002 }, { COLOR_003 }, { COLOR_004 }, { COLOR_BLK }, { COLOR_BLK } },
+    { { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK } },
+    { { COLOR_BLK }, { COLOR_BLK }, { COLOR_YLW }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_RED } },
+    { { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { ___CLR___ } },
+    { { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { ___CLR___ }, { ___CLR___ } },
+    { { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { COLOR_RED }, { ___CLR___ } },
+    { { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_005 } } },
+  { { { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK } },
+    { { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_RED }, { COLOR_BLK } },
+    { { COLOR_RED }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK } },
+    { { ___CLR___ }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK } },
+    { { ___CLR___ }, { ___CLR___ }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK } },
+    { { ___CLR___ }, { COLOR_RED }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ } },
+    { { COLOR_005 }, { COLOR_BLK }, { COLOR_BLK }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ } } } },
+/*------------------------------------------------------------------------------
+  LAYER 6: FN
+------------------------------------------------------------------------------*/
+{ { { { COLOR_WHT }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 } },
+    { { COLOR_WHT }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 } },
+    { { COLOR_WHT }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLU } },
+    { { COLOR_WHT }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { ___CLR___ } },
+    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_006 }, { COLOR_006 }, { ___CLR___ }, { ___CLR___ } },
+    { { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { COLOR_006 }, { ___CLR___ } },
+    { { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { COLOR_006 }, { COLOR_006 }, { COLOR_BLK } } },
+  { { { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_WHT } },
+    { { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_WHT } },
+    { { COLOR_BLU }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_WHT } },
+    { { ___CLR___ }, { COLOR_BLK }, { COLOR_006 }, { COLOR_BLK }, { COLOR_006 }, { COLOR_BLK }, { COLOR_WHT } },
+    { { ___CLR___ }, { ___CLR___ }, { COLOR_006 }, { COLOR_006 }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
+    { { ___CLR___ }, { COLOR_006 }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ } },
+    { { COLOR_BLK }, { COLOR_006 }, { COLOR_006 }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ }, { ___CLR___ } } } },
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -136,159 +262,20 @@ uint8_t rgb_coords[2][7][7] = {
 };
 
 bool reserved_keys[2][7][7] = {
-  { { false, false, false, false, false, false, false },
-    { false, false, false, false, false, false, false },
-    { false, false, false, false, false, false, false },
-    { false, false, false, false, false, false, false },
-    { false, false, false, false, false, false, false },
-    { false, false, false, false, false, false, false },
-    { false, false, false, false, false, false, false } },
-  { { false, false, false, false, false, false, false },
-    { false, false, false, false, false, false, false },
-    { false, false, false, false, false, false, false },
-    { false, false, false, false, false, false, false },
-    { false, false, false, false, false, false, false },
-    { false, false, false, false, false, false, false },
-    { false, false, false, false, false, false, false } }
-};
-
-
-#define __NOCLR__ 0, 0, 0
-#define COLOR_BLK 0x00, 0x00, 0x00
-#define COLOR_WHT 0xFF, 0xFF, 0xFF
-#define COLOR_RED 0xFF, 0x20, 0x20
-#define COLOR_GRN 0x20, 0xFF, 0x20
-#define COLOR_BLU 0x20, 0x20, 0xFF
-#define COLOR_CYN 0x10, 0xFF, 0xFF
-#define COLOR_MAG 0xFF, 0x10, 0xFF
-#define COLOR_YLW 0xFF, 0xFF, 0x10
-#define COLOR_001 COLOR_BLU
-#define COLOR_002 COLOR_RED
-#define COLOR_003 COLOR_GRN
-#define COLOR_004 COLOR_CYN
-#define COLOR_005 COLOR_YLW
-#define COLOR_006 COLOR_MAG
-
-uint8_t color_maps[][2][7][7][3] = {
-/*------------------------------------------------------------------------------
-  LAYER 0: QWERTY
-------------------------------------------------------------------------------*/
-{ { { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
-    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
-    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_BLU } },
-    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { __NOCLR__ } },
-    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { __NOCLR__ }, { __NOCLR__ } },
-    { { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { COLOR_RED }, { __NOCLR__ } },
-    { { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_005 } } },
-  { { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
-    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
-    { { COLOR_BLU }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
-    { { __NOCLR__ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
-    { { __NOCLR__ }, { __NOCLR__ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
-    { { __NOCLR__ }, { COLOR_RED }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ } },
-    { { COLOR_005 }, { COLOR_WHT }, { COLOR_WHT }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ } } } },
-/*------------------------------------------------------------------------------
-  LAYER 1: DVORAK
-------------------------------------------------------------------------------*/
-{ { { { COLOR_WHT }, { COLOR_001 }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
-    { { COLOR_WHT }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_WHT } },
-    { { COLOR_WHT }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_BLU } },
-    { { COLOR_WHT }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { __NOCLR__ } },
-    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { __NOCLR__ }, { __NOCLR__ } },
-    { { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { COLOR_RED }, { __NOCLR__ } },
-    { { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_005 } } },
-  { { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
-    { { COLOR_WHT }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 } },
-    { { COLOR_BLU }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 } },
-    { { __NOCLR__ }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_001 }, { COLOR_WHT } },
-    { { __NOCLR__ }, { __NOCLR__ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
-    { { __NOCLR__ }, { COLOR_RED }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ } },
-    { { COLOR_005 }, { COLOR_WHT }, { COLOR_WHT }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ } } } },
-/*------------------------------------------------------------------------------
-  LAYER 2: COLEMAK
-------------------------------------------------------------------------------*/
-{ { { { COLOR_WHT }, { COLOR_WHT }, { COLOR_002 }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
-    { { COLOR_WHT }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_WHT } },
-    { { COLOR_WHT }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_BLU } },
-    { { COLOR_WHT }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { __NOCLR__ } },
-    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { __NOCLR__ }, { __NOCLR__ } },
-    { { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { COLOR_RED }, { __NOCLR__ } },
-    { { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_005 } } },
-  { { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
-    { { COLOR_WHT }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 } },
-    { { COLOR_BLU }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 } },
-    { { __NOCLR__ }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_002 }, { COLOR_WHT } },
-    { { __NOCLR__ }, { __NOCLR__ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
-    { { __NOCLR__ }, { COLOR_RED }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ } },
-    { { COLOR_005 }, { COLOR_WHT }, { COLOR_WHT }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ } } } },
-/*------------------------------------------------------------------------------
-  LAYER 3: WORKMAN
-------------------------------------------------------------------------------*/
-{ { { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_003 }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
-    { { COLOR_WHT }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_WHT } },
-    { { COLOR_WHT }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_BLU } },
-    { { COLOR_WHT }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { __NOCLR__ } },
-    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { __NOCLR__ }, { __NOCLR__ } },
-    { { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { COLOR_RED }, { __NOCLR__ } },
-    { { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_005 } } },
-  { { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
-    { { COLOR_WHT }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 } },
-    { { COLOR_BLU }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 } },
-    { { __NOCLR__ }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_003 }, { COLOR_WHT } },
-    { { __NOCLR__ }, { __NOCLR__ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
-    { { __NOCLR__ }, { COLOR_RED }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ } },
-    { { COLOR_005 }, { COLOR_WHT }, { COLOR_WHT }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ } } } },
-/*------------------------------------------------------------------------------
-  LAYER 4: Numpad
-------------------------------------------------------------------------------*/
-{ { { { COLOR_006 }, { COLOR_004 }, { COLOR_004 }, { COLOR_004 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 } },
-    { { COLOR_WHT }, { COLOR_004 }, { COLOR_004 }, { COLOR_004 }, { COLOR_006 }, { COLOR_006 }, { COLOR_BLK } },
-    { { COLOR_WHT }, { COLOR_004 }, { COLOR_004 }, { COLOR_004 }, { COLOR_006 }, { COLOR_BLK }, { COLOR_BLU } },
-    { { COLOR_WHT }, { COLOR_004 }, { COLOR_004 }, { COLOR_006 }, { COLOR_006 }, { COLOR_BLK }, { __NOCLR__ } },
-    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { __NOCLR__ }, { __NOCLR__ } },
-    { { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { COLOR_RED }, { __NOCLR__ } },
-    { { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_005 } } },
-  { { { COLOR_006 }, { COLOR_006 }, { COLOR_004 }, { COLOR_004 }, { COLOR_004 }, { COLOR_006 }, { COLOR_WHT } },
-    { { COLOR_BLK }, { COLOR_BLK }, { COLOR_004 }, { COLOR_004 }, { COLOR_004 }, { COLOR_006 }, { COLOR_006 } },
-    { { COLOR_BLU }, { COLOR_BLK }, { COLOR_004 }, { COLOR_004 }, { COLOR_004 }, { COLOR_006 }, { COLOR_006 } },
-    { { __NOCLR__ }, { COLOR_BLK }, { COLOR_004 }, { COLOR_004 }, { COLOR_006 }, { COLOR_006 }, { COLOR_WHT } },
-    { { __NOCLR__ }, { __NOCLR__ }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
-    { { __NOCLR__ }, { COLOR_RED }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ } },
-    { { COLOR_005 }, { COLOR_WHT }, { COLOR_WHT }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ } } } },
-/*------------------------------------------------------------------------------
-  LAYER 5: Config
-------------------------------------------------------------------------------*/
-{ { { { COLOR_WHT }, { COLOR_001 }, { COLOR_002 }, { COLOR_003 }, { COLOR_004 }, { COLOR_BLK }, { COLOR_BLK } },
-    { { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK } },
-    { { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_RED } },
-    { { COLOR_BLK }, { COLOR_RED }, { COLOR_YLW }, { COLOR_GRN }, { COLOR_BLK }, { COLOR_BLK }, { __NOCLR__ } },
-    { { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { __NOCLR__ }, { __NOCLR__ } },
-    { { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { COLOR_RED }, { __NOCLR__ } },
-    { { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_005 } } },
-  { { { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK } },
-    { { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK } },
-    { { COLOR_RED }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK } },
-    { { __NOCLR__ }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK } },
-    { { __NOCLR__ }, { __NOCLR__ }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK } },
-    { { __NOCLR__ }, { COLOR_RED }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ } },
-    { { COLOR_005 }, { COLOR_BLK }, { COLOR_BLK }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ } } } },
-/*------------------------------------------------------------------------------
-  LAYER 6: FN
-------------------------------------------------------------------------------*/
-{ { { { COLOR_WHT }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 } },
-    { { COLOR_WHT }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 } },
-    { { COLOR_WHT }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLU } },
-    { { COLOR_WHT }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { __NOCLR__ } },
-    { { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_006 }, { COLOR_006 }, { __NOCLR__ }, { __NOCLR__ } },
-    { { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { COLOR_006 }, { __NOCLR__ } },
-    { { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { COLOR_006 }, { COLOR_006 }, { COLOR_RED } } },
-  { { { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_WHT } },
-    { { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_006 }, { COLOR_WHT } },
-    { { COLOR_BLU }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_BLK }, { COLOR_WHT } },
-    { { __NOCLR__ }, { COLOR_BLK }, { COLOR_006 }, { COLOR_BLK }, { COLOR_006 }, { COLOR_BLK }, { COLOR_WHT } },
-    { { __NOCLR__ }, { __NOCLR__ }, { COLOR_006 }, { COLOR_006 }, { COLOR_WHT }, { COLOR_WHT }, { COLOR_WHT } },
-    { { __NOCLR__ }, { COLOR_006 }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ } },
-    { { COLOR_RED }, { COLOR_006 }, { COLOR_006 }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ }, { __NOCLR__ } } } },
+  { { 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0 } },
+  { { 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0 } }
 };
 
 void set_rgb_matrix_coords(uint8_t side, uint8_t x, uint8_t y, uint8_t red, uint8_t green, uint8_t blue) {
@@ -331,6 +318,9 @@ void reserve_rgb_coord(uint8_t side, uint8_t x, uint8_t y, bool value) {
 }
 
 static volatile bool recording = false;
+static volatile bool playing = false;
+static volatile bool blinking = false;
+static volatile bool macroRecordProcessed = false;
 static bool macro1Recorded = false;
 static bool macro2Recorded = false;
 
@@ -347,15 +337,6 @@ void process_rgb_matrix_state(void) {
   led_t lock_state = host_keyboard_led_state();
 
   switch (layer) {
-    case 0:
-    case 1:
-    case 2:
-    case 3:
-      if (lock_state.caps_lock) {
-        set_rgb_matrix_coords(0, 0, 2, COLOR_005);
-      }
-      break;
-
     case 4:
       if (lock_state.num_lock) {
         set_rgb_matrix_coords(0, 0, 0, COLOR_005);
@@ -364,6 +345,14 @@ void process_rgb_matrix_state(void) {
       if (lock_state.scroll_lock) {
         set_rgb_matrix_coords(0, 6, 0, COLOR_005);
         set_rgb_matrix_coords(1, 0, 0, COLOR_005);
+      }
+
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+      if (lock_state.caps_lock) {
+        set_rgb_matrix_coords(0, 0, 2, COLOR_005);
       }
       break;
 
@@ -405,7 +394,45 @@ void rgb_matrix_indicators_user(void) {
   process_rgb_matrix_state();
 }
 
-void keymap_thread_task(void) {
+layer_state_t layer_state_set_user(layer_state_t state) {
+  process_rgb_matrix_state();
+  return state;
+}
+
+void keymap_led_thread_task(void) {
+  if (blinking || playing) {
+    ML_LED_1(true);
+    ML_LED_2(true);
+    ML_LED_3(true);
+    ML_LED_4(true);
+    ML_LED_5(true);
+    ML_LED_6(true);
+    chThdSleepMilliseconds(25);
+    ML_LED_1(false);
+    ML_LED_2(false);
+    ML_LED_3(false);
+    ML_LED_4(false);
+    ML_LED_5(false);
+    ML_LED_6(false);
+    chThdSleepMilliseconds(25);
+    ML_LED_1(true);
+    ML_LED_2(true);
+    ML_LED_3(true);
+    ML_LED_4(true);
+    ML_LED_5(true);
+    ML_LED_6(true);
+    chThdSleepMilliseconds(25);
+    ML_LED_1(false);
+    ML_LED_2(false);
+    ML_LED_3(false);
+    ML_LED_4(false);
+    ML_LED_5(false);
+    ML_LED_6(false);
+    blinking = false;
+  }
+}
+
+void keymap_rgb_thread_task(void) {
   if (recording) {
     set_rgb_matrix_coords(0, 6, 6, COLOR_RED);
     set_rgb_matrix_coords(1, 0, 6, COLOR_RED);
@@ -422,26 +449,52 @@ void keymap_thread_task(void) {
   }
 }
 
-static THD_WORKING_AREA(waKeymapThread, 128);
-static THD_FUNCTION(KeymapThread, arg) {
+static THD_WORKING_AREA(waKeymapLEDThread, 128);
+static THD_FUNCTION(KeymapLEDThread, arg) {
 
     (void)arg;
 
     while (true) {
-      keymap_thread_task();
+      keymap_led_thread_task();
+      chThdSleepMilliseconds(1);
+    }
+}
+
+static THD_WORKING_AREA(waKeymapRGBThread, 128);
+static THD_FUNCTION(KeymapRGBThread, arg) {
+
+    (void)arg;
+
+    while (true) {
+      keymap_rgb_thread_task();
       chThdSleepMilliseconds(1);
     }
 }
 
 void keyboard_pre_init_user(void) {
-  chThdCreateStatic(waKeymapThread, sizeof(waKeymapThread), NORMALPRIO-16, KeymapThread, NULL);
+  chThdCreateStatic(waKeymapRGBThread, sizeof(waKeymapRGBThread), NORMALPRIO-16, KeymapRGBThread, NULL);
+  chThdCreateStatic(waKeymapLEDThread, sizeof(waKeymapLEDThread), NORMALPRIO-16, KeymapLEDThread, NULL);
 }
 
 #ifdef DYNAMIC_MACRO_ENABLE
 void dynamic_macro_record_start_user(void) {
   recording = true;
+  macroRecordProcessed = false;
   reserve_rgb_coord(0, 6, 6, true);
   reserve_rgb_coord(1, 0, 6, true);
+}
+
+void dynamic_macro_record_key_user(int8_t direction, keyrecord_t *record) {
+  blinking = true;
+  macroRecordProcessed = true;
+}
+
+void dynamic_macro_play_start_user(int8_t direction) {
+  playing = true;
+}
+
+void dynamic_macro_play_end_user(int8_t direction) {
+  playing = false;
 }
 
 void dynamic_macro_record_end_user(int8_t direction) {
@@ -449,9 +502,9 @@ void dynamic_macro_record_end_user(int8_t direction) {
   reserve_rgb_coord(0, 6, 6, false);
   reserve_rgb_coord(1, 0, 6, false);
   if (direction == 1) {
-    macro1Recorded = true;
+    macro1Recorded = macroRecordProcessed;
   } else if (direction == -1) {
-    macro2Recorded = true;
+    macro2Recorded = macroRecordProcessed;
   }
 }
 #endif
